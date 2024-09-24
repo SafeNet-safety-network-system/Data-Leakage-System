@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SafeNet - Taskflow{% endblock %}</title>
+
+    <!-- Bootstrap and custom styles -->
+    <link rel="stylesheet" href="{% static 'taskflow/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'taskflow/css/basestyle.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">SafeNet Taskflow</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'project_list' %}">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'task_list' %}">Tasks</a>  <!-- Link to Tasks -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'data_view' %}">Data View</a>  <!-- Link to Data View -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content section -->
+    <main class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-transparent">
+        <div class="container">
+            <span>&copy; 2024 SafeNet. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript files -->
+    <script src="{% static 'taskflow/js/jquery.min.js' %}"></script>
+    <script src="{% static 'taskflow/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'taskflow/base.html' %}
+{% block title %}Your Files - SafeNet{% endblock %}
+
+<div class="container">
+    <h1>Your Uploaded Files</h1>
+<h2>Uploaded CSV Files</h2>
+<ul>
+    {% for csv in csv_files %}
+        <li>{{ csv.file.name }} - uploaded on {{ csv.uploaded_at }}</li>
+    {% endfor %}
+</ul>
+
+    <form action="{% url 'search_files' %}" method="GET" class="form-inline my-2">
+        <input class="form-control" type="text" name="query" placeholder="Search files" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.file.name }}</td>
+                <td>
+                    <a href="{% url 'view_file' file.id %}" class="btn btn-info">View</a>
+                    <a href="{% url 'modify_file' file.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_file' file.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'download_file' file.id %}" class="btn btn-success">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
