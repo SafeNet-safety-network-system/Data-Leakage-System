@@ -1,0 +1,55 @@
+{% extends 'taskflow/base.html' %}
+
+{% block content %}
+<h2>Your Tasks</h2>
+
+<div class="mb-3">
+    <form action="{% url 'create_task' %}" method="GET">
+        <button type="submit" class="btn btn-primary">Create Task</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Assigned To</th>
+            <th>Project (Optional)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.start_date }}</td>
+            <td>{{ task.due_date }}</td>
+            <td>
+                {% if task.assigned_to.all %}
+                    {% for user in task.assigned_to.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No users assigned
+                {% endif %}
+            </td>
+            <td>{{ task.project.name|default:'N/A' }}</td>
+            <td>
+                <a href="{% url 'edit_task' task.id %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-info">View</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No tasks available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

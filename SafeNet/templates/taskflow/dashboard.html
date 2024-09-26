@@ -1,0 +1,228 @@
+{% extends 'taskflow/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - SafeNet{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-0">
+    <h2>Dashboard</h2>
+
+    <div class="row">
+        <div class="container">
+            <div class="alert alert-info" role="alert">
+                Welcome, {{ user.username }}! Here’s what’s happening in your projects.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="container-fluid col-md-7">
+            <!-- Projects Overview -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Projects Overview</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if projects %}
+                                {% for project in projects %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'project_detail' project.id %}">{{ project.name }}</a>
+                                    </td>
+                                    <td>{{ project.start_date }}</td>
+                                    <td>{{ project.end_date }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">No projects available. <a href="{% url 'create_project' %}">Create a new project</a>.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between mt-2">
+                        <a href="{% url 'create_project' %}" class="btn btn-primary">Create New Project</a>
+                        {% if projects %}
+                            <a href="{% url 'create_task' %}" class="btn btn-secondary">Create Task</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Tasks -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Your Tasks</h4>
+                    {% if tasks %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Start Date</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.title }}</td>
+                                <td>{{ task.start_date }}</td>
+                                <td>{{ task.due_date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No tasks assigned.</p>
+                    {% endif %}
+                </div>
+            </div>
+        
+<!-- Data Leak Notification -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>Data Leak Notifications</h4>
+        {% if user.is_superuser %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Notification</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data_leak_notifications %}
+                    {% for notification in data_leak_notifications %}
+                        <tr>
+                            <td>{{ notification.timestamp }}: {{ notification.message }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>No data leak notifications.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- Buttons Section -->
+        <div class="d-flex justify-content-center mt-3">
+            <a href="#" class="btn btn-danger mx-2">Clear Notifications</a>
+            <a href="#" class="btn btn-secondary mx-2">Reports</a>
+        </div>
+        {% else %}
+        <p class="text-center text-danger">Access Denied</p>
+        {% endif %}
+    </div>
+</div>
+        </div>
+
+        <!-- Alerts & Logs -->
+        <div class="col-md-5">
+            <!-- Alerts Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Alerts</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Alert Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if alerts %}
+                                {% for alert in alerts %}
+                                    <tr>
+                                        <td>Task "{{ alert.title }}" is due soon ({{ alert.due_date }}).</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td>No alerts at the moment.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Deletion Alerts Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Recent Deletion Alerts</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Alert Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if recent_alerts %}
+                                {% for alert in recent_alerts %}
+                                    <tr>
+                                        <td>{{ alert.timestamp }}: {{ alert.action }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td>No recent deletion alerts.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Logs Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Logs</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log.timestamp }}</td>
+                                <td>{{ log.action }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'taskflow/js/charts.js' %}"></script>
+
+<script>
+    const userId = "{{ request.user.id }}";  // Pass the user ID in the template context
+    const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/`);
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        alert(`New task created: ${data.task_title} in project: ${data.project_name}`);
+        // You can update the UI dynamically here as needed
+    };
+
+    socket.onclose = function(event) {
+        console.log('WebSocket closed: ', event);
+    };
+
+    socket.onerror = function(error) {
+        console.error('WebSocket error: ', error);
+    };
+</script>
+
+{% endblock %}

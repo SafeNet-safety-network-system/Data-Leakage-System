@@ -1,0 +1,202 @@
+{% extends 'taskflow/base.html' %}
+{% load static %}
+{% block title %}Home - SafeNet{% endblock %}
+
+{% block content %}
+<div class="text-center my-5">
+    <h1 style="font-size: 3.5rem; color: #007bff;" class="animate__animated animate__fadeInDown"><b>Welcome to SafeNet Taskflow</b></h1>
+    <p class="lead animate__animated animate__fadeInUp">Your project management solution for better collaboration and efficiency.</p>
+    <div class="mt-4 d-flex justify-content-center">
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg mx-2 animate__animated animate__fadeInLeft">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary btn-lg mx-2 animate__animated animate__fadeInRight">Register</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="text-center text-white my-4 animate__animated animate__fadeIn">Key Features</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 animate__animated animate__zoomIn">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Project Creation</h5>
+                    <p class="card-text">Easily create new projects with detailed descriptions and set specific goals for your team.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 animate__animated animate__zoomIn" data-wow-delay="0.1s">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Task Management</h5>
+                    <p class="card-text">Assign tasks to team members, set deadlines, and track progress efficiently.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100 animate__animated animate__zoomIn" data-wow-delay="0.2s">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Notifications & Alerts</h5>
+                    <p class="card-text">Receive instant notifications for project updates, task deadlines, and data leakage alerts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-white my-4 animate__animated animate__fadeIn">Project Overview</h3>
+    <p class="text-white mb-4 animate__animated animate__fadeIn">SafeNet Taskflow is designed to enhance productivity by streamlining project management. Users can create, manage, and track their projects in real-time.</p>
+
+<div class="image-container">
+    <img src="{% static 'taskflow/images/Home-back.jpeg' %}" alt="Your Image" class="img-fluid">
+    <div class="overlay">
+        <div class="text">
+            <div class="stat">
+                <p>150+</p>
+                <p>Projects Created</p>
+            </div>
+            <div class="stat">
+                <p>350+</p>
+                <p>Tasks Managed</p>
+            </div>
+            <div class="stat">
+                <p>500+</p>
+                <p>Alerts Sent</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <h3 class="text-black my-4 animate__animated animate__fadeIn">Implementation Process</h3>
+    <p class="text-black mb-4 animate__animated animate__fadeIn">Our development team has worked diligently to create a user-friendly interface that leverages the latest technologies. The core features include:</p>
+    <ul class="text-black mb-4 animate__animated animate__fadeIn">
+        <li>Modular architecture for easy maintenance and scalability.</li>
+        <li>Real-time notifications to keep users informed.</li>
+        <li>Robust security measures to protect sensitive data.</li>
+    </ul>
+
+    <h3 class="text-white my-4 animate__animated animate__fadeIn">Detailed Features</h3>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="floating-card text-center p-4 animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                <h5>Collaboration</h5>
+                <p>Work together with your team efficiently.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="floating-card text-center p-4 animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                <h5>Data Leakage Alerts</h5>
+                <p>Receive immediate notifications for suspicious activity.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="floating-card text-center p-4 animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                <h5>User Management</h5>
+                <p>Manage user roles and permissions to ensure secure access.</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="contact-header" class="btn btn-outline-light my-4 animate__animated animate__fadeIn" style="cursor: pointer;">Contact Us</button>
+    <div id="contact-form" class="d-none animate__animated animate__fadeIn">
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+        <p class="mt-3">If you have any questions or feedback, feel free to reach out!</p>
+        <p>Email: <a href="mailto:support@safenet.com">support@safenet.com</a></p>
+    </div>
+</div>
+
+<!-- Link to External JavaScript -->
+<script src="{% static 'taskflow/js/main.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+
+<script>
+    document.getElementById('contact-header').addEventListener('click', function() {
+        var form = document.getElementById('contact-form');
+        form.classList.toggle('d-none');
+    });
+</script>
+
+<style>
+    .feature-card {
+        transition: transform 0.3s;
+    }
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+    .floating-card {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .floating-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    img {
+        transition: transform 0.3s;
+    }
+    img:hover {
+        transform: scale(1.05);
+    }
+    
+.image-container {
+    position: relative;
+    text-align: center;
+    color: white; /* Default text color */
+}
+
+.img-fluid {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-around; /* Space items evenly */
+    width: 100%; /* Make the overlay take full width */
+}
+
+.text {
+    display: flex;
+    justify-content: space-around; /* Align items side by side */
+    width: 100%; /* Make it full width */
+}
+
+.stat {
+    background-color: rgba(255, 255, 255, 0.3); /* White with transparency */
+    padding: 20px; /* Add padding for spacing inside the box */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    text-align: center; /* Center text within each stat block */
+    font-size: 1.5rem; /* Increase font size */
+    font-weight: bold; /* Make text bold */
+    margin: 0 10px; /* Space between boxes */
+    flex: 1; /* Make all boxes equal width */
+    min-width: 120px; /* Set a minimum width */
+}
+
+.stat p {
+    margin: 0; /* Remove default margin for paragraphs */
+}
+
+
+</style>
+
+{% endblock %}

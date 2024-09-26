@@ -1,0 +1,16 @@
+<!-- add_users.html -->
+{% extends 'taskflow/base.html' %}
+
+{% block content %}
+<h2>Add Users to Project: {{ project.name }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% for user in users %}
+        <div>
+            <input type="checkbox" name="user_ids" value="{{ user.id }}">
+            {{ user.username }}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Add Selected Users</button>
+</form>
+{% endblock %}
